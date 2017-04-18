@@ -15,6 +15,7 @@ import org.simpleframework.xml.strategy.Strategy;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
 
+
                 .addNetworkInterceptor(new StethoInterceptor())
 //                .addInterceptor(interceptor)
 //                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -84,30 +86,37 @@ public class MainActivity extends AppCompatActivity {
 
         envelope.setAuthRequestBody(authRequestBody);
 
-        Call<RequestEnvelope> call = service.requestStateInfo(envelope);
+        Call<Envelope> call = service.requestStateInfo(envelope);
 
-        call.enqueue(new Callback<RequestEnvelope>() {
+        call.enqueue(new Callback<Envelope>() {
             @Override
-            public void onResponse(Call<RequestEnvelope> call, Response<RequestEnvelope> response) {
-                Log.d("Main", response.message());
+            public void onResponse(Call<Envelope> call, Response<Envelope> response) {
+                Log.d("MainRes", response.body().getBody().getAuthorizeResponse().getResponseInfo().getResponseGenTime()); //.getAuthorizeResponse().getRootBody().getAuthRequestData().getResponseGenTime());
+
+
             }
 
             @Override
-            public void onFailure(Call<RequestEnvelope> call, Throwable t) {
-                Log.d("Main", t.getMessage());
+            public void onFailure(Call<Envelope> call, Throwable t) {
+                Log.d("MainFa", t.getMessage());
 
             }
         });
 
-        Observable<RequestEnvelope> observable = service.requestStateInfoObs(envelope);
+        Observable<Envelope> observable = service.requestStateInfoObs(envelope);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        requestEnvelope -> {
+                        responseEnvelope -> {
 
-                            Log.d("Main", " body " + requestEnvelope.getAuthRequestBody());
+
+                            Log.d("Main", " body " + responseEnvelope.getBody().getAuthorizeResponse().getResponseInfo().getResponseGenTime()); //.getAuthorizeResponse().getRootBody().getAuthRequestData().getResponseCode());
+
+
                         },
-                        throwable -> {Log.d("Main", " thro " + throwable.getMessage());}
+                        throwable -> {
+                            Log.d("Main", " thro " + throwable.getMessage());
+                        }
                 );
     }
 }
