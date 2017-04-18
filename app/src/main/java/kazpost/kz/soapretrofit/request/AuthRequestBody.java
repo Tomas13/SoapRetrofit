@@ -1,4 +1,4 @@
-package kazpost.kz.soapretrofit;
+package kazpost.kz.soapretrofit.request;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -8,7 +8,7 @@ import org.simpleframework.xml.Root;
  */
 
 @Root(name = "soapenv:Body", strict = false)
-class AuthRequestBody {
+public class AuthRequestBody {
 
     @Element(name = "sch:AuthorizeRequest", required = true)
     private AuthRequestData authRequestData;

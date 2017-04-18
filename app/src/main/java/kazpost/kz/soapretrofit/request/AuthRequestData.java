@@ -1,4 +1,4 @@
-package kazpost.kz.soapretrofit;
+package kazpost.kz.soapretrofit.request;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Namespace;
@@ -10,7 +10,7 @@ import org.simpleframework.xml.Root;
 
 @Root(name = "sch:AuthorizeRequest", strict = false)
 //@Namespace(reference = "http://172.30.223.25:8088/mobiterminal")
-class AuthRequestData {
+public class AuthRequestData {
 
     @Element(name = "sch:UserBarcode", required = true)
     private String userBarcode;

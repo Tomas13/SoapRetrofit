@@ -14,8 +14,10 @@ import org.simpleframework.xml.strategy.Strategy;
 
 import java.util.concurrent.TimeUnit;
 
+import kazpost.kz.soapretrofit.request.AuthRequestBody;
+import kazpost.kz.soapretrofit.request.AuthRequestData;
+import kazpost.kz.soapretrofit.request.RequestEnvelope;
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
