@@ -56,19 +56,14 @@ public class MainActivity extends AppCompatActivity {
         Serializer serializer = new Persister(strategy);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-
-
                 .addNetworkInterceptor(new StethoInterceptor())
-//                .addInterceptor(interceptor)
-//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-
                 .connectTimeout(2, TimeUnit.MINUTES)
                 .writeTimeout(2, TimeUnit.MINUTES)
                 .readTimeout(2, TimeUnit.MINUTES)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(SimpleXmlConverterFactory.create(serializer))
+                .addConverterFactory(SimpleXmlConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl("http://172.30.223.25:8088/mobiterminal/Terminal.wsdl/")
                 .client(okHttpClient)
